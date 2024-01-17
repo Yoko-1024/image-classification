@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  #imageInput {
+    margin-top: 20px;
+  }
+  
+  #img {
+    max-width: 100%;
+    display: block;
+    margin: 10px auto;
+  }
+  
+  #predictionResult {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #007bff;
+  }
+  

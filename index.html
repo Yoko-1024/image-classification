@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>画像分類</title>
+  <link rel="stylesheet" href="style.css">
+ </head>
+<body>
+  <!-- Load TensorFlow.js. This is required to use MobileNet. -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+  <!-- Load the MobileNet model. -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script>
+
+  <input type="file" id="imageInput" accept="image/*">
+  <img id="img" src="" style="display:none; max-width:100%">
+  <p id="predictionResult"></p>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const img = document.getElementById('img');
+    const predictionResult = document.getElementById('predictionResult');
+
+    imageInput.addEventListener('change', handleImageUpload);
+
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        // Read the selected image file
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const imageUrl = e.target.result;
+
+          // Display the selected image
+          img.src = imageUrl;
+          img.style.display = 'block';
+
+          // Convert the image to Base64
+          const base64Image = imageUrl.split(',')[1];
+
+          // Load the MobileNet model
+          mobilenet.load().then(model => {
+            // Classify the image
+            model.classify(img).then(predictions => {
+              // Display predictions
+              console.log('Predictions: ', predictions);
+              const topPrediction = predictions[0].className;
+              const secondPrediction = predictions[1].className;
+              const thirdPrediction = predictions[2].className;
+              predictionResult.innerHTML = `First candidate: ${topPrediction}<br> Second candidate: ${secondPrediction}<br> Third candidate: ${thirdPrediction}`;
+            });
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>
