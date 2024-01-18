@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,10 +45,13 @@
             model.classify(img).then(predictions => {
               // Display predictions
               console.log('Predictions: ', predictions);
-              const topPrediction = predictions[0].className;
-              const secondPrediction = predictions[1].className;
-              const thirdPrediction = predictions[2].className;
-              predictionResult.innerHTML = `First candidate: ${topPrediction}<br> Second candidate: ${secondPrediction}<br> Third candidate: ${thirdPrediction}`;
+              let n1 = predictions[0].probability * 100.0;
+              let n2 = predictions[1].probability * 100.0;
+              let n3 = predictions[2].probability * 100.0;
+              const topPrediction = predictions[0].className + " / Match rate: " + Math.floor(n1) + "%";
+              const secondPrediction = predictions[1].className + " / Match rate: " + Math.floor(n2) + "%";
+              const thirdPrediction = predictions[2].className + " / Match rate: " + Math.floor(n3) + "%";
+              predictionResult.innerHTML = `First candidate: ${topPrediction} <br> Second candidate: ${secondPrediction} <br> Third candidate: ${thirdPrediction}`;
             });
           });
         };
